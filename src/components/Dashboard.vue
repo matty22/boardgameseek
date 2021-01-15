@@ -12,7 +12,7 @@
     </aside>
     <main>
       <section id="infoBar"></section>
-      <section id="topRow"></section>
+      <section id="topRow"><QuickStat/><QuickStat/><QuickStat/><QuickStat/></section>
       <section id="middleRow"></section>
       <section id="bottomRow"></section>
     </main>
@@ -20,12 +20,16 @@
 </template>
 
 <script>
+import QuickStat from './QuickStat.vue'
 export default {
   setup() {
 
     return {
 
     }
+  },
+  components: {
+    QuickStat
   }
 }
 </script>
