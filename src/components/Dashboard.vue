@@ -76,8 +76,7 @@ main {
   display: grid;
   grid-row-gap: 20px;
   grid-template-rows: 35px 150px 300px 200px;
-  background-color: #f4f3ef;
-  padding: 0px 20px;  
+  background-color: #f4f3ef; 
 }
 
 #infoBar {
@@ -90,6 +89,7 @@ main {
   grid-template-rows: 1fr;
   grid-template-columns: auto auto auto auto;
   grid-column-gap: 20px;
+  padding: 0px 20px; 
 }
 
 #middleRow {
@@ -97,6 +97,7 @@ main {
   grid-template-rows: 1fr;
   grid-template-columns: auto auto;
   grid-column-gap: 20px;
+  padding: 0px 20px; 
 }
 
 #bottomRow {
@@ -104,6 +105,7 @@ main {
   grid-template-rows: 1fr;
   grid-template-columns: auto auto;
   grid-column-gap: 20px;
+  padding: 0px 20px; 
 }
 
 
