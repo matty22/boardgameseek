@@ -12,15 +12,28 @@
     </aside>
     <main>
       <section id="infoBar"></section>
-      <section id="topRow"><QuickStat/><QuickStat/><QuickStat/><QuickStat/></section>
-      <section id="middleRow"></section>
-      <section id="bottomRow"></section>
+      <section id="topRow">
+        <QuickStat/>
+        <QuickStat/>
+        <QuickStat/>
+        <QuickStat/>
+      </section>
+      <section id="middleRow">
+        <ChartBlock/>
+        <ChartBlock/>
+      </section>
+      <section id="bottomRow">
+        <ChartBlock/>
+        <ChartBlock/>
+      </section>
     </main>
   </div>
 </template>
 
 <script>
 import QuickStat from './QuickStat.vue'
+import ChartBlock from './ChartBlock.vue'
+
 export default {
   setup() {
 
@@ -29,7 +42,8 @@ export default {
     }
   },
   components: {
-    QuickStat
+    QuickStat,
+    ChartBlock
   }
 }
 </script>
@@ -77,6 +91,7 @@ main {
   grid-row-gap: 20px;
   grid-template-rows: 35px 150px 300px 200px;
   background-color: #f4f3ef; 
+  min-height: 100vh;
 }
 
 #infoBar {
