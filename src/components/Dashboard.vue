@@ -5,9 +5,15 @@
         <h3>BoardGameSeek</h3>
       </div>
       <ul>
-        <li>DASHBOARD</li>
-        <li>RECOMMENDER</li>
-        <li>ABOUT</li>
+        <li>
+          <router-link to="/">DASHBOARD</router-link>
+        </li>
+        <li>
+          <router-link to="/recommender">RECOMMENDER</router-link>
+        </li>
+        <li>
+          <router-link to="/about">ABOUT</router-link>
+        </li>
       </ul>
     </aside>
     <main>
