@@ -1,9 +1,9 @@
 <template>
   <section id="topRow">
-    <QuickStat/>
-    <QuickStat/>
-    <QuickStat/>
-    <QuickStat/>
+    <QuickStat title="# of BGG Users" value="> 2 million" />
+    <QuickStat title="Current #1 Ranked Game" value="Gloomhaven" />
+    <QuickStat title="# of games on BGG" value="20,150" />
+    <QuickStat title="2020 Spiel des Jahres Winner" value="Pictures" />
   </section>
   <section id="middleRow">
     <ChartBlock/>
@@ -38,7 +38,6 @@ export default {
 
 #topRow {
   display: grid;
-  grid-template-rows: 1fr;
   grid-template-columns: auto auto auto auto;
   grid-column-gap: 20px;
   padding: 0px 20px; 
