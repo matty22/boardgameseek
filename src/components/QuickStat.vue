@@ -1,6 +1,7 @@
 <template>
   <article>
-    <p>Hello World!</p>
+    <h2>{{ title }}</h2>
+    <h1>{{ value }}</h1>
   </article>
 </template>
 
@@ -11,7 +12,8 @@ export default {
     return {
 
     }
-  }
+  },
+  props: ["title", "value", "imageSrc"]
 }
 </script>
 
