@@ -1,34 +1,36 @@
 <template>
-  <section id="topRow">
-    <div class="quickStat">
-      <img class="quickStatImg" id="personSVG" width="60" src="../assets/person.svg" />
-      <p class="quickStatP"># of BGG Users</p>
-      <h1 class="quickStatTitle">> 2 million</h1>
-    </div>
-    <div class="quickStat">
-      <img class="quickStatImg" width="75" src="../assets/GloomhavenThumb.png" />
-      <p class="quickStatP">Current #1 Ranked Game</p>
-      <h1 class="quickStatTitle"><em>Gloomhaven</em></h1>
-    </div>
-    <div class="quickStat">
-      <img class="quickStatImg" id="casinoSVG" width="60" src="../assets/casino.svg" />
-      <p class="quickStatP"># of games on BGG</p>
-      <h1 class="quickStatTitle">20,150</h1>
-    </div>
-    <div class="quickStat">
-      <img class="quickStatImg" width="60" src="../assets/pictures2.png" />
-      <p class="quickStatP">2020 Spiel des Jahres Winner</p>
-      <h1 class="quickStatTitle"><em>Pictures</em></h1>
-    </div>
-  </section>
-  <section id="middleRow">
-    <ChartBlock/>
-    <ChartBlock/>
-  </section>
-  <section id="bottomRow">
-    <ChartBlock/>
-    <ChartBlock/>
-  </section>
+  <div>
+    <section id="topRow">
+      <div class="quickStat">
+        <img class="quickStatImg" id="personSVG" width="60" src="../assets/person.svg" />
+        <p class="quickStatP"># of BGG Users</p>
+        <h1 class="quickStatTitle">> 2 million</h1>
+      </div>
+      <div class="quickStat">
+        <img class="quickStatImg" width="75" src="../assets/GloomhavenThumb.png" />
+        <p class="quickStatP">Current #1 Ranked Game</p>
+        <h1 class="quickStatTitle"><em>Gloomhaven</em></h1>
+      </div>
+      <div class="quickStat">
+        <img class="quickStatImg" id="casinoSVG" width="60" src="../assets/casino.svg" />
+        <p class="quickStatP"># of games on BGG</p>
+        <h1 class="quickStatTitle">20,150</h1>
+      </div>
+      <div class="quickStat">
+        <img class="quickStatImg" width="60" src="../assets/pictures2.png" />
+        <p class="quickStatP">2020 Spiel des Jahres Winner</p>
+        <h1 class="quickStatTitle"><em>Pictures</em></h1>
+      </div>
+    </section>
+    <section id="middleRow">
+      <ChartBlock/>
+      <ChartBlock/>
+    </section>
+    <section id="bottomRow">
+      <ChartBlock/>
+      <ChartBlock/>
+    </section>
+  </div>
 </template>
 
 <script>
