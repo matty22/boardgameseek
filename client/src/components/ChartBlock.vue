@@ -31,7 +31,7 @@ export default {
 article {
   border-top: 1px solid #dadada;
   box-shadow: 0px 2px 1px 1px #dadada;
-  background-color: #f7f7f7;
+  background-color: #ffffff;
   padding: 20px 20px;
   border-radius: 5px;
 }

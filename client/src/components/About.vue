@@ -44,7 +44,7 @@ export default {
   border-top: 1px solid #dadada;
   border-radius: 5px;
   box-shadow: 0px 2px 1px 1px #dadada;
-  background-color: #f7f7f7;
+  background-color: #ffffff;
   padding: 20px 20px;
   margin-top: 20px;
 }
