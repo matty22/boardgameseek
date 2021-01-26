@@ -49,4 +49,9 @@ export default {
   margin-top: 20px;
 }
 
+#aboutBody a {
+  color: #328d64;
+  text-decoration: none;
+}
+
 </style>

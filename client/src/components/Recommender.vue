@@ -243,14 +243,14 @@ export default {
     border: 1px solid #212121;
     color: #ffffff;
     border-radius: 5px;
-    background-color: #960e29;
+    background-color: #41b883;
     font-weight: bold;
     font-size: 18px;
     transition: 0.3s;
   }
 
   button:hover {
-    background-color: #cc1338;
+    background-color: #328d64;
     cursor: pointer;
   }
 
