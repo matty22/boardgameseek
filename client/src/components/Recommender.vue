@@ -105,6 +105,15 @@ import Multiselect from '@vueform/multiselect'
 export default {
   components: { Multiselect },
   methods: {
+    // This is the shape that API calls to server should take
+    // methods: {
+    //   async test() {
+    //     let res = await fetch('http://localhost:3000/testing', {method: "POST", body: ''})
+    //     let body = await res.text();
+    //     console.log(body);
+      
+    //   }
+    // },
     getRecommendations () {
       let categories = [];
       let mechanics = [];

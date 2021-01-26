@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="gridBody">
     <section id="topRow">
       <div class="quickStat">
         <img class="quickStatImg" id="personSVG" width="60" src="../assets/person.svg" />
@@ -23,18 +23,19 @@
       </div>
     </section>
     <section id="middleRow">
-      <ChartBlock/>
-      <ChartBlock/>
+      <div class="chartBlock">
+        <h2>Board Game Rank by Average Game Weight</h2>
+        <iframe width="750" height="450" src="https://app.powerbi.com/reportEmbed?reportId=6b9e02b8-5bb5-41aa-9a4c-bd7634f5dcdd&autoAuth=true&ctid=cfa792cf-7768-4341-8857-81754c2afa1f&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXdlc3QtdXMtYi1wcmltYXJ5LXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9&navContentPaneEnabled=false" frameborder="0" allowFullScreen="true"></iframe>
+      </div>
     </section>
     <section id="bottomRow">
-      <ChartBlock/>
-      <ChartBlock/>
+      
     </section>
   </div>
 </template>
 
 <script>
-import ChartBlock from './ChartBlock.vue'
+// import ChartBlock from './ChartBlock.vue'
 
 export default {
 
@@ -45,7 +46,7 @@ export default {
     }
   },
   components: {
-    ChartBlock
+    // ChartBlock
   }
 }
 </script>
@@ -53,11 +54,20 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+#gridBody {
+  display: grid;
+  grid-template-rows: 0px 150px 500px 500px;
+  grid-row-gap: 20px;
+  background-color: #f4f3ef; 
+  min-height: 100vh;
+}
+
 #topRow {
   display: grid;
   grid-template-columns: auto auto auto auto;
   grid-column-gap: 20px;
   padding: 0px 20px; 
+  grid-row: 2/3;
 }
 
 .quickStat {
@@ -73,18 +83,26 @@ export default {
 
 #middleRow {
   display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 1fr;
   grid-column-gap: 20px;
+  grid-row:3;
   padding: 0px 20px; 
 }
 
 #bottomRow {
   display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 1fr;
   grid-column-gap: 20px;
-  padding: 0px 20px; 
+  padding: 0px 20px;
+  grid-row: 4; 
+}
+
+.chartBlock {
+  border-top: 1px solid #dadada;
+  box-shadow: 0px 2px 1px 1px #dadada;
+  background-color: #ffffff;
+  padding: 20px 20px;
+  border-radius: 5px;
 }
 
 #personSVG {
