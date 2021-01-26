@@ -2,17 +2,17 @@
 	<div id="body">
 		<aside>
 			<div id="title">
-				<h3>BoardGameSeek</h3>
+				<h3 class="navLink"><img class="icon titleIcon" src="./assets/search.svg" />BoardGameSeek</h3>
 			</div>
 			<ul>
 				<li>
-					<router-link to="/">DASHBOARD</router-link>
+					<router-link to="/" class="navLink"><img class="icon" src="./assets/dashboard.svg" /> DASHBOARD</router-link>
 				</li>
 				<li>
-					<router-link to="/recommender">RECOMMENDER</router-link>
+					<router-link to="/recommender" class="navLink"><img class="icon" src="./assets/thumb_up.svg" /> RECOMMENDER</router-link>
 				</li>
 				<li>
-					<router-link to="/about">ABOUT</router-link>
+					<router-link to="/about" class="navLink"><img class="icon" src="./assets/info.svg" /> ABOUT</router-link>
 				</li>
 			</ul>
 		</aside>
@@ -118,6 +118,26 @@ aside > ul > li {
   padding-bottom: 30px;
 }
 
+.navLink{
+	display: flex;
+	align-items: center;
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.icon {
+	padding-right: 10px;
+	filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(5deg) brightness(99%) contrast(102%);
+}
+
+.titleIcon {
+	filter: invert(57%) sepia(41%) saturate(555%) hue-rotate(101deg) brightness(99%) contrast(90%);
+}
+
+.navLink:hover {
+	color: #41b883;
+}
+
 /* Main window styles */
 
 main {
@@ -129,7 +149,7 @@ main {
 }
 
 #infoBar {
-  background-color: #f4f8ef;
+  background-color: #ffffff;
   border-bottom: 1px solid #dadada;
 }
 
