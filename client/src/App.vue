@@ -142,15 +142,13 @@ aside > ul > li {
 
 main {
   display: grid;
-  grid-row-gap: 20px;
-  grid-template-rows: 35px 150px 300px 200px;
-  background-color: #f4f3ef; 
-  min-height: 100vh;
+  grid-template-rows: 35px auto;
 }
 
 #infoBar {
   background-color: #ffffff;
   border-bottom: 1px solid #dadada;
+	grid-row: 1/2;
 }
 
 

@@ -1,21 +1,14 @@
 <template>
   <article>
-    <p>Chart Block</p>
+    <p>{{ title }}</p>
+    <iframe width='{{ width }}' height='{{ height }}' src='{{ frameLink }}' frameborder='0' allowFullScreen='true' />
   </article>
 </template>
 
 <script>
 
 export default {
-  // This is the shape that API calls to server should take
-  // methods: {
-  //   async test() {
-  //     let res = await fetch('http://localhost:3000/testing', {method: "POST", body: ''})
-  //     let body = await res.text();
-  //     console.log(body);
-      
-  //   }
-  // },
+  props: ['title', 'width', 'height', 'frameLink'],
   setup() {
 
     return {
