@@ -22,14 +22,33 @@
         <h1 class="quickStatTitle"><em>Pictures</em></h1>
       </div>
     </section>
-    <section id="middleRow">
+    <section id="chartArea">
       <div class="chartBlock">
-        <h2>Board Game Rank by Average Game Weight</h2>
-        <iframe width="750" height="450" src="https://app.powerbi.com/reportEmbed?reportId=6b9e02b8-5bb5-41aa-9a4c-bd7634f5dcdd&autoAuth=true&ctid=cfa792cf-7768-4341-8857-81754c2afa1f&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXdlc3QtdXMtYi1wcmltYXJ5LXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9&navContentPaneEnabled=false" frameborder="0" allowFullScreen="true"></iframe>
+        <h2>GeekRating vs # of Owners K-Means Cluster</h2>
+        <iframe width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=fba8f7b3-8e78-4781-a816-15613541b63d&autoAuth=true&ctid=cfa792cf-7768-4341-8857-81754c2afa1f&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXdlc3QtdXMtYi1wcmltYXJ5LXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9&navContentPaneEnabled=false" frameborder="0" allowFullScreen="true"></iframe>
       </div>
-    </section>
-    <section id="bottomRow">
-      
+      <div class="chartBlock">
+        <h2>Game Weight (complexity) vs # of Owners K-Means Cluster</h2>
+        <iframe width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=a9d21d66-0b88-45aa-8054-386e28d92023&autoAuth=true&ctid=cfa792cf-7768-4341-8857-81754c2afa1f&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXdlc3QtdXMtYi1wcmltYXJ5LXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9&navContentPaneEnabled=false" frameborder="0" allowFullScreen="true"></iframe>
+      </div>
+      <div class="chartBlock">
+        <h2>Decision Tree to predict BoardGameGeek rank</h2>
+        <iframe width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=caa8f356-337b-4394-9dfb-2c37c44716b6&autoAuth=true&ctid=cfa792cf-7768-4341-8857-81754c2afa1f&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXdlc3QtdXMtYi1wcmltYXJ5LXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9&navContentPaneEnabled=false" frameborder="0" allowFullScreen="true"></iframe>
+      </div>
+      <div class="chartBlock">
+        <h2>Decision Tree to predict how many people own the game</h2>
+        <iframe width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=e926378a-bece-4e38-adf6-f193da2559a1&autoAuth=true&ctid=cfa792cf-7768-4341-8857-81754c2afa1f&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXdlc3QtdXMtYi1wcmltYXJ5LXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9&navContentPaneEnabled=false" frameborder="0" allowFullScreen="true"></iframe>
+      </div>
+      <div class="chartBlock">
+        <h2>Board Game Rank by Average Game Weight Trend Line</h2>
+        <iframe width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=6b9e02b8-5bb5-41aa-9a4c-bd7634f5dcdd&autoAuth=true&ctid=cfa792cf-7768-4341-8857-81754c2afa1f&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXdlc3QtdXMtYi1wcmltYXJ5LXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9&navContentPaneEnabled=false" frameborder="0" allowFullScreen="true"></iframe>
+      </div>
+      <!-- Undetermined if I want to include this chart or not. Loading time is really slow and this chart
+           is not critical
+      <div class="chartBlock">
+        <h2>Minimum Recommended Age vs. # of Owners</h2>
+        <iframe width="1140" height="541.25" src="https://app.powerbi.com/reportEmbed?reportId=dc4e181e-2290-42c2-b7b9-5f578794b518&autoAuth=true&ctid=cfa792cf-7768-4341-8857-81754c2afa1f&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLXdlc3QtdXMtYi1wcmltYXJ5LXJlZGlyZWN0LmFuYWx5c2lzLndpbmRvd3MubmV0LyJ9&navContentPaneEnabled=false" frameborder="0" allowFullScreen="true"></iframe>
+      </div> -->
     </section>
   </div>
 </template>
@@ -56,7 +75,7 @@ export default {
 
 #gridBody {
   display: grid;
-  grid-template-rows: 0px 150px 500px 500px;
+  grid-template-rows: 0px 150px auto auto auto;
   grid-row-gap: 20px;
   background-color: #f4f3ef; 
   min-height: 100vh;
@@ -81,28 +100,29 @@ export default {
   border-radius: 5px;
 }
 
-#middleRow {
+#chartArea {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 20px;
-  grid-row:3;
+  grid-template-columns: auto;
+  grid-row: 3;
+  grid-row-gap: 20px;
   padding: 0px 20px; 
-}
-
-#bottomRow {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-column-gap: 20px;
-  padding: 0px 20px;
-  grid-row: 4; 
 }
 
 .chartBlock {
   border-top: 1px solid #dadada;
   box-shadow: 0px 2px 1px 1px #dadada;
   background-color: #ffffff;
-  padding: 20px 20px;
+  padding: 20px 0px;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.chartBlock h2 {
+  padding-bottom: 10px;
+  font-size: 24px;
 }
 
 #personSVG {
