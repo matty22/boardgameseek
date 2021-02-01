@@ -11,7 +11,7 @@
         <p>Choose a value for any or all of these fields to get your board game recommendations.</p>
         <div>
           <label for="minPlayers">Minimum # of Players: </label>
-          <select name="minPlayers">
+          <select id="minPlayers" name="minPlayers">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -26,7 +26,7 @@
         </div>
         <div>
           <label for="maxPlayers">Maximum # of Players: </label>
-          <select name="maxPlayers">
+          <select id="maxPlayers" name="maxPlayers">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -42,7 +42,7 @@
         </div>
         <div>
           <label for="minRating">Minimum Game Rating: </label>
-          <select name="minRating">
+          <select id="minRating" name="minRating">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -55,7 +55,7 @@
         </div>
         <div>
           <label for="maxWeight">Maximum Game Weight: </label>
-          <select name="maxWeight">
+          <select id="maxWeight" name="maxWeight">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -65,7 +65,7 @@
         </div>
         <div>
           <label for="maxTime">Maximum Game Play Time: </label>
-          <select name="maxTime">
+          <select id="maxTime" name="maxTime">
             <option value="<15">&lt; 15 minutes</option>
             <option value="<30">&lt; 30 minutes</option>
             <option value="<60">&lt; 60 minutes</option>
@@ -114,28 +114,45 @@ import Multiselect from '@vueform/multiselect'
 export default {
   components: { Multiselect },
   methods: {
-    // This is the shape that API calls to server should take
-    // methods: {
-    //   async test() {
-    //     let res = await fetch('http://localhost:3000/testing', {method: "POST", body: ''})
-    //     let body = await res.text();
-    //     console.log(body);
+      async test() {
+        let res = await fetch('http://localhost:3000/testing', {method: "POST", body: ''})
+        let body = await res.text();
+        console.log(body);
       
-    //   }
-    // },
-    getRecommendations () {
-      let categories = [];
-      let mechanics = [];
+      },
+    async getRecommendations () {
       
+      let searchObj = {
+        minPlayers: 0,
+        maxPlayers: 0,
+        minRating: 0,
+        maxWeight: 0,
+        maxTime: 0,
+        categories: [],
+        mechanics: []
+      }
+      
+      // Get values out of all of the input controls
+      searchObj.minPlayers = document.getElementById('minPlayers').value;
+      searchObj.maxPlayers = document.getElementById('maxPlayers').value;
+      searchObj.minRating = document.getElementById('minRating').value;
+      searchObj.maxWeight = document.getElementById('maxWeight').value;
+      searchObj.maxTime = document.getElementById('maxTime').value;
+
       // Example for getting the string values of the categories input
       this.categoriesValue.forEach((value) => {
-        categories.push(this.categoriesOptions[value]);
+        searchObj.categories.push(this.categoriesOptions[value]);
       });
 
       // Example for getting the string values of the mechanics input
       this.mechanicsValue.forEach((value) => {
-        mechanics.push(this.mechanicsOptions[value]);
+        searchObj.mechanics.push(this.mechanicsOptions[value]);
       });
+
+      let res = await fetch('http://localhost:3000/recommend', {method: "POST", body: ''})
+      let searchResults = await res.text();
+      console.log(searchResults);
+
     }
   },
   data () {
