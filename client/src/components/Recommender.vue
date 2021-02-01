@@ -148,9 +148,14 @@ export default {
       this.mechanicsValue.forEach((value) => {
         searchObj.mechanics.push(this.mechanicsOptions[value]);
       });
-
-      let res = await fetch('http://localhost:3000/recommend', {method: "POST", body: ''})
-      let searchResults = await res.text();
+      console.log(searchObj);
+      let res = await fetch('http://localhost:3000/recommend', {method: "POST", 
+                                                                headers: {
+                                                                  'Accept': 'application/json',
+                                                                  'Content-Type': 'application/json'
+                                                                },
+                                                                body: JSON.stringify(searchObj)});
+      let searchResults = await res.json();
       console.log(searchResults);
 
     }
