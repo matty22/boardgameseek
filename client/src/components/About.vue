@@ -36,6 +36,7 @@ export default {
 
 #aboutBody {
   padding: 0px 70px;
+  background-color: #f4f3ef;
 }
 
 #aboutBody p {

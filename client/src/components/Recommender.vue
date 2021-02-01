@@ -94,7 +94,16 @@
           <button @click="getRecommendations">Search</button>
       </section>
       <section>
-        <p>insert results here</p>
+        <div class="searchResult" v-for="result in searchResults" :key="result.id">
+          <img src="{{result.image}}" alt="Game image">
+          <div>
+            <h2>{{ result.name }}</h2>
+            <p>BGG Rank: {{ result.rank }}</p>
+            <p>GeekRating: {{ result.rating }}</p>
+            <p>Average Weight: {{ result.weight }}</p>
+            <p>Description: {{ result.desc }}</p>
+          </div>
+        </div>
       </section>
     </div>
   </div>
@@ -130,6 +139,7 @@ export default {
     }
   },
   data () {
+    // let searchResults = [];
     return {
       categoriesValue: [],
       categoriesOptions: ['Abstract Strategy', 'Action/Dexterity', 'Adventure', 'Age of Reason', 'American Civil War', 'American Indian Wars', 
@@ -192,6 +202,8 @@ export default {
     grid-template-columns:  auto 75% auto;
     justify-items: center;
     align-items: center;
+    padding-top: 20px;
+    background-color: #f4f3ef;
   }
   
   #recommenderBody {
@@ -272,5 +284,10 @@ export default {
   #multiselect {
     background-color: #ffffff;
   }
+
+  .searchResult {
+    display: grid;
+  }
+
 
 </style>
