@@ -91,7 +91,7 @@
             :searchable="true"
             :options="mechanicsOptions" />
           </div>
-          <button @click="getRecommendations">Search</button>
+          <button @click="testFirestore">Search</button>
       </section>
       <section>
         <div class="searchResult" v-for="result in searchResults" :key="result.id">
@@ -111,15 +111,10 @@
 
 <script>
 import Multiselect from '@vueform/multiselect'
+import { db } from '../../firebaseDatabase';
 export default {
   components: { Multiselect },
   methods: {
-      async test() {
-        let res = await fetch('http://localhost:3000/testing', {method: "POST", body: ''})
-        let body = await res.text();
-        console.log(body);
-      
-      },
     async getRecommendations () {
       
       let searchObj = {
@@ -157,7 +152,20 @@ export default {
                                                                 body: JSON.stringify(searchObj)});
       let searchResults = await res.json();
       console.log(searchResults);
-
+    },
+    testFirestore() {
+    console.log('pushed the button');
+    let gamesRef = db.collection("games");
+    gamesRef.where("name", "==", "Gloomhaven")
+            .get()
+            .then((querySnapshot) => {
+              querySnapshot.forEach(function(doc) {
+                console.log(doc.data());
+              });
+            })
+            .catch(function(error) {
+              console.log("error getting documents: ", error);
+            });
     }
   },
   data () {
