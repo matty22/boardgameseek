@@ -10,23 +10,8 @@
       <section id="formFields">
         <p>Choose a value for any or all of these fields to get your board game recommendations.</p>
         <div>
-          <label for="minPlayers">Minimum # of Players: </label>
-          <select id="minPlayers" name="minPlayers">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </select>
-        </div>
-        <div>
-          <label for="maxPlayers">Maximum # of Players: </label>
-          <select id="maxPlayers" name="maxPlayers">
+          <label for="numPlayers"># of Players: </label>
+          <select id="numPlayers" name="numPlayers" required>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -42,7 +27,7 @@
         </div>
         <div>
           <label for="minRating">Minimum Game Rating: </label>
-          <select id="minRating" name="minRating">
+          <select id="minRating" name="minRating" required>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -55,7 +40,7 @@
         </div>
         <div>
           <label for="maxWeight">Maximum Game Weight: </label>
-          <select id="maxWeight" name="maxWeight">
+          <select id="maxWeight" name="maxWeight" required>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -65,12 +50,12 @@
         </div>
         <div>
           <label for="maxTime">Maximum Game Play Time: </label>
-          <select id="maxTime" name="maxTime">
-            <option value="<15">&lt; 15 minutes</option>
-            <option value="<30">&lt; 30 minutes</option>
-            <option value="<60">&lt; 60 minutes</option>
-            <option value="<120">&lt; 120 minutes</option>
-            <option value="120+">120+ minutes</option>
+          <select id="maxTime" name="maxTime" required>
+            <option value="15">15 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">60 minutes</option>
+            <option value="120">120 minutes</option>
+            <option value="999">120+ minutes</option>
           </select>
         </div>
         <div id="categories">
@@ -80,7 +65,8 @@
             v-model="categoriesValue"
             mode="tags"
             :searchable="true"
-            :options="categoriesOptions" />
+            :options="categoriesOptions" 
+             required />
         </div>
         <div id="mechanics">
           <label for="mechanics">Game Mechanics</label>
@@ -89,19 +75,27 @@
             v-model="mechanicsValue"
             mode="tags"
             :searchable="true"
-            :options="mechanicsOptions" />
+            :options="mechanicsOptions" 
+             required />
           </div>
-          <button @click="testFirestore">Search</button>
+          <button @click="getRecommendations">Search</button>
       </section>
       <section>
-        <div class="searchResult" v-for="result in searchResults" :key="result.id">
-          <img src="{{result.image}}" alt="Game image">
-          <div>
-            <h2>{{ result.name }}</h2>
-            <p>BGG Rank: {{ result.rank }}</p>
-            <p>GeekRating: {{ result.rating }}</p>
-            <p>Average Weight: {{ result.weight }}</p>
-            <p>Description: {{ result.desc }}</p>
+        <div v-if="initialResults.length > 0">
+          <div class="searchResult" v-for="result in initialResults.slice(0, 10)" :key="result.id">
+            <img :src="result.image" class="resultImage" />
+            <div>
+              <h2>{{ result.name }}</h2>
+              <p>BGG Rank: {{ result["Board Game Rank"] }}</p>
+              <p>GeekRating: {{ result.GeekAverage }}</p>
+              <p>Average Weight: {{ result.averageweight }}</p>
+              <p>Description: {{ result.description }}</p>
+            </div>
+          </div>
+        </div>
+        <div v-else>
+          <div class="searchResult" v-bind:class="{ hideWarning: !searchButtonPushed }">
+            <p>No results matching your criteria. Please perform another search.</p>
           </div>
         </div>
       </section>
@@ -115,24 +109,27 @@ import { db } from '../../firebaseDatabase';
 export default {
   components: { Multiselect },
   methods: {
-    async getRecommendations () {
-      
+
+    getRecommendations: function () {
+      let self = this;
       let searchObj = {
-        minPlayers: 0,
-        maxPlayers: 0,
+        numPlayers: 0,
         minRating: 0,
         maxWeight: 0,
         maxTime: 0,
         categories: [],
         mechanics: []
       }
-      
+      self.initialResults = [];
+
+      let initialResults = [];
+      let finalResults = [];
+           
       // Get values out of all of the input controls
-      searchObj.minPlayers = document.getElementById('minPlayers').value;
-      searchObj.maxPlayers = document.getElementById('maxPlayers').value;
-      searchObj.minRating = document.getElementById('minRating').value;
-      searchObj.maxWeight = document.getElementById('maxWeight').value;
-      searchObj.maxTime = document.getElementById('maxTime').value;
+      searchObj.numPlayers = parseInt(document.getElementById('numPlayers').value);
+      searchObj.minRating = parseInt(document.getElementById('minRating').value);
+      searchObj.maxWeight = parseInt(document.getElementById('maxWeight').value);
+      searchObj.maxTime = parseInt(document.getElementById('maxTime').value);
 
       // Example for getting the string values of the categories input
       this.categoriesValue.forEach((value) => {
@@ -143,34 +140,82 @@ export default {
       this.mechanicsValue.forEach((value) => {
         searchObj.mechanics.push(this.mechanicsOptions[value]);
       });
-      console.log(searchObj);
-      let res = await fetch('http://localhost:3000/recommend', {method: "POST", 
-                                                                headers: {
-                                                                  'Accept': 'application/json',
-                                                                  'Content-Type': 'application/json'
-                                                                },
-                                                                body: JSON.stringify(searchObj)});
-      let searchResults = await res.json();
-      console.log(searchResults);
-    },
-    testFirestore() {
-    console.log('pushed the button');
-    let gamesRef = db.collection("games");
-    gamesRef.where("name", "==", "Gloomhaven")
-            .get()
-            .then((querySnapshot) => {
-              querySnapshot.forEach(function(doc) {
-                console.log(doc.data());
+
+
+      let gamesRef = db.collection("games");
+      gamesRef.where("GeekAverage", ">", searchObj.minRating)
+              .orderBy("GeekAverage", "desc")
+              .limit(1000)
+              .get()
+              .then((querySnapshot) => {
+                querySnapshot.forEach(function(doc) {
+                  initialResults.push(doc.data());
+                });
+                initialResults = JSON.parse(JSON.stringify(initialResults));
+              })
+              .then(() => {
+                // Filter initialResults further
+                finalResults = initialResults.filter((game) => {
+                  
+                  if (searchObj.numPlayers < game.minplayers || searchObj.numPlayers > game.maxplayers) {
+                    return false;
+                  }
+
+                  if (searchObj.maxTime < game.maxplaytime) {
+                    return false;
+                  }
+
+                  if (searchObj.maxWeight <= game.averageweight) {
+                    return false;
+                  }
+                  
+                  // if boardgamecategory not includes
+                  // Clean up awful stringified array into proper array
+                  let cleanGameCategory = game.boardgamecategory.substring(1, game.boardgamecategory.length-1).split(", ");
+                  cleanGameCategory = cleanGameCategory.map(a => a.replace("'", ""));
+                  cleanGameCategory = cleanGameCategory.map(a => a.replace("'", ""));
+                  
+                  // Concat both arrays
+                  let allCategories = [...cleanGameCategory, ...searchObj.categories];
+                  let catBool = (new Set(allCategories).size !== allCategories.length);
+                  if (catBool == false) {
+                    return false;
+                  }
+                  
+
+
+                  // if boardgamemechanic not includes
+                  // Clean up awful stringified array into proper array
+                  let cleanGameMechanic = game.boardgamemechanic.substring(1, game.boardgamemechanic.length-1).split(", ");
+                  cleanGameMechanic = cleanGameMechanic.map(a => a.replace("'", ""));
+                  cleanGameMechanic = cleanGameMechanic.map(a => a.replace("'", ""));
+                  
+                  // Concat both arrays
+                  let allMechanics = [...cleanGameMechanic, ...searchObj.mechanics];
+                  let mechBool = (new Set(allMechanics).size !== allMechanics.length);
+
+                  if(mechBool == false) {
+                    return false;
+                  }
+
+                  
+                  // if game meets all criteria, add to results set
+                  return game;
+
+                });
+                self.initialResults = finalResults;
+              })
+              .catch(function(error) {
+                console.log("error getting documents: ", error);
               });
-            })
-            .catch(function(error) {
-              console.log("error getting documents: ", error);
-            });
-    }
+      self.searchButtonPushed = true;
+    },
   },
   data () {
-    // let searchResults = [];
+    
     return {
+      searchButtonPushed: false,
+      initialResults: [],
       categoriesValue: [],
       categoriesOptions: ['Abstract Strategy', 'Action/Dexterity', 'Adventure', 'Age of Reason', 'American Civil War', 'American Indian Wars', 
                         'American Revolutionary War', 'American West', 'Ancient', 'Animals', 'Arabian', 'Aviation/Flight', 'Bluffing', 'Book', 
@@ -317,6 +362,15 @@ export default {
 
   .searchResult {
     display: grid;
+  }
+
+  .resultImage {
+    width: 200px;
+    height: auto;
+  }
+
+  .hideWarning {
+    display: none;
   }
 
 
