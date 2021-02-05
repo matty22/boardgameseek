@@ -8,8 +8,9 @@
         </p>
       </section>
       <section id="formFields">
-        <p>Choose a value for any or all of these fields to get your board game recommendations.</p>
-        <div>
+        <p id="instructions">Choose a value for any or all of these fields to get your board game recommendations.</p>
+        <p id="hint"><img src="../assets/help.svg" />&nbsp;&nbsp;For more targeted results, choose fewer categories and mechanics. For wider results, choose more categories and mechanics.</p>
+        <div id="firstRowFields">
           <label for="numPlayers"># of Players: </label>
           <select id="numPlayers" name="numPlayers" required>
             <option value="1">1</option>
@@ -25,7 +26,7 @@
             <option value="11+">11+</option>
           </select>
         </div>
-        <div>
+        <div id="secondRowFields">
           <label for="minRating">Minimum Game Rating: </label>
           <select id="minRating" name="minRating" required>
             <option value="1">1</option>
@@ -82,14 +83,14 @@
       </section>
       <section>
         <div v-if="initialResults.length > 0">
-          <div class="searchResult" v-for="result in initialResults.slice(0, 10)" :key="result.id">
+          <div class="searchResult" v-for="result in initialResults.slice(0, 20)" :key="result.id">
             <img :src="result.image" class="resultImage" />
-            <div>
-              <h2>{{ result.name }}</h2>
-              <p>BGG Rank: {{ result["Board Game Rank"] }}</p>
-              <p>GeekRating: {{ result.GeekAverage }}</p>
-              <p>Average Weight: {{ result.averageweight }}</p>
-              <p>Description: {{ result.description }}</p>
+            <div class="resultBody">
+              <p class="resultTitle">{{ result.name }}</p>
+              <p><strong>BGG Rank:</strong> {{ result["Board Game Rank"] }}</p>
+              <p><strong>GeekRating:</strong> {{ result.GeekAverage }}</p>
+              <p><strong>Average Weight:</strong> {{ result.averageweight }}</p>
+              <p><strong>Description:</strong> {{ result.description }}</p>
             </div>
           </div>
         </div>
@@ -204,6 +205,7 @@ export default {
 
                 });
                 self.initialResults = finalResults;
+                console.log(finalResults);
               })
               .catch(function(error) {
                 console.log("error getting documents: ", error);
@@ -277,7 +279,7 @@ export default {
     grid-template-columns:  auto 75% auto;
     justify-items: center;
     align-items: center;
-    padding-top: 20px;
+    padding: 20px 0px 40px 0px;
     background-color: #f4f3ef;
   }
   
@@ -301,7 +303,7 @@ export default {
   #formFields {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 60px 40px 40px 40px 60px 60px 40px;
+    grid-template-rows: 30px 40px 40px 40px 60px 60px 40px;
     grid-row-gap: 10px;
     grid-column-gap: 10px;
   }
@@ -311,6 +313,7 @@ export default {
     grid-row-end: 2;
     grid-column-start: 1;
     grid-column-end: 3;
+
   }
 
   h1 {
@@ -321,6 +324,26 @@ export default {
 
   p {
     text-align: justify;
+  }
+
+  #instructions {
+    border-bottom: 1px solid #212121;
+  }
+
+  #hint {
+    grid-row: 2/3;
+    grid-column: 1/3;
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+  }
+
+  #firstRowFields {
+    grid-row: 3/4;
+  }
+
+  #secondRowFields {
+    grid-row: 4/5;
   }
 
   #categories {
@@ -362,11 +385,29 @@ export default {
 
   .searchResult {
     display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 150px;
+    grid-column-gap: 20px;
+    padding: 30px 20px;
+    border-bottom: 1px solid #212121;
   }
 
   .resultImage {
-    width: 200px;
-    height: auto;
+    width: 100%;
+    max-height: 200px;
+    grid-row: 1/5
+  }
+
+  .resultBody {
+    grid-column-start: 2;
+    line-height: 150%;
+    overflow: hidden;
+  }
+
+  .resultTitle {
+    font-weight: bold;
+    font-size: 26px;
+    padding-bottom: 10px;
   }
 
   .hideWarning {
