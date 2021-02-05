@@ -61,9 +61,9 @@
           <summary>Click here for an explanation for this chart</summary>
           <p>This decision tree graph attempts to predict how highly a game will be ranked on BGG based on a few inputs.
             A lower value (higher rank) is preferred in this tree. At each fork, the left branch is the 'yes' branch and 
-            the right branch is the 'no' branch.<br><br>The number of users who have rated the game (GeekAverage) has a large
-            effect on how a game is ranked. This could be due to games that are already well regarded have more players and 
-            thus more ratings. After that, the game weight (complexity) predicts a game's rank. BGG users tend to rank games 
+            the right branch is the 'no' branch.<br><br>The total number of users who have rated the game has a large
+            effect on how a game is ranked. This could be because games that are already well regarded have more players and 
+            thus more total ratings. After that, the game weight (complexity) predicts a game's rank. BGG users tend to rank games 
             higher when they have greater complexity. This is likely caused by most BGG players being enthusiasts for the hobby
             and being very familiar with common boardgame tropes. The minimum number of players can also affect how high a game 
             reaches on the BGG charts.
