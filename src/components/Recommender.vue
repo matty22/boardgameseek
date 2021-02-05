@@ -145,8 +145,8 @@ export default {
         searchObj.mechanics.push(this.mechanicsOptions[value]);
       });
 
+      // If user doesn't enter any categories or mechanics, tell them at least one of each is required
       if (searchObj.categories.length == 0 || searchObj.mechanics.length == 0) {
-        // alert("You must enter at least one choice for game category and game mechanic");
         self.invalidSearch = !self.invalidSearch;
         return;
       }
@@ -154,7 +154,7 @@ export default {
       let gamesRef = db.collection("games");
       gamesRef.where("GeekAverage", ">", searchObj.minRating)
               .orderBy("GeekAverage", "desc")
-              .limit(1000)
+              .limit(2000)
               .get()
               .then((querySnapshot) => {
                 querySnapshot.forEach(function(doc) {
@@ -213,12 +213,11 @@ export default {
 
                 });
                 self.initialResults = finalResults;
-                console.log(finalResults);
+                self.searchButtonPushed = true;
               })
               .catch(function(error) {
                 console.log("error getting documents: ", error);
               });
-      self.searchButtonPushed = true;
     },
   },
   data () {
