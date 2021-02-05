@@ -223,6 +223,7 @@ details {
 
 summary {
   text-align: center;
+  cursor: pointer;
 }
 
 details > p {
