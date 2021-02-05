@@ -12,9 +12,9 @@
         <p id="hint"><img src="../assets/help.svg" />&nbsp;&nbsp;For more targeted results, choose fewer categories and mechanics. For wider results, choose more categories and mechanics.</p>
         <div id="firstRowFields">
           <label for="numPlayers"># of Players: </label>
-          <select id="numPlayers" name="numPlayers" required>
+          <select id="numPlayers" name="numPlayers">
             <option value="1">1</option>
-            <option value="2">2</option>
+            <option value="2" selected>2</option>
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
@@ -28,11 +28,11 @@
         </div>
         <div id="secondRowFields">
           <label for="minRating">Minimum Game Rating: </label>
-          <select id="minRating" name="minRating" required>
+          <select id="minRating" name="minRating">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
-            <option value="4">4</option>
+            <option value="4" selected>4</option>
             <option value="5">5</option>
             <option value="6">6</option>
             <option value="7">7</option>
@@ -41,20 +41,20 @@
         </div>
         <div>
           <label for="maxWeight">Maximum Game Weight: </label>
-          <select id="maxWeight" name="maxWeight" required>
+          <select id="maxWeight" name="maxWeight">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
-            <option value="4">4</option>
+            <option value="4" selected>4</option>
             <option value="5">5</option>
           </select>
         </div>
         <div>
           <label for="maxTime">Maximum Game Play Time: </label>
-          <select id="maxTime" name="maxTime" required>
+          <select id="maxTime" name="maxTime">
             <option value="15">15 minutes</option>
             <option value="30">30 minutes</option>
-            <option value="60">60 minutes</option>
+            <option value="60" selected>60 minutes</option>
             <option value="120">120 minutes</option>
             <option value="999">120+ minutes</option>
           </select>
@@ -62,26 +62,29 @@
         <div id="categories">
           <label for="categories">Game Categories</label>
           <Multiselect
-            name="categories" 
+            name="categories"
+            v-bind:class="{ invalidSearchFields: invalidSearch }"
             v-model="categoriesValue"
             mode="tags"
             :searchable="true"
             :options="categoriesOptions" 
-             required />
+          />
         </div>
         <div id="mechanics">
           <label for="mechanics">Game Mechanics</label>
           <Multiselect 
             name="mechanics"
+            v-bind:class="{ invalidSearchFields: invalidSearch }"
             v-model="mechanicsValue"
             mode="tags"
             :searchable="true"
             :options="mechanicsOptions" 
-             required />
+          />
           </div>
           <button @click="getRecommendations">Search</button>
       </section>
       <section>
+        <p v-if="invalidSearch" id="invalidSearchText">You must choose at least one game category and one game mechanic.</p>
         <div v-if="initialResults.length > 0">
           <div class="searchResult" v-for="result in initialResults.slice(0, 20)" :key="result.id">
             <img :src="result.image" class="resultImage" />
@@ -122,7 +125,7 @@ export default {
         mechanics: []
       }
       self.initialResults = [];
-
+      self.invalidSearch = false;
       let initialResults = [];
       let finalResults = [];
            
@@ -142,6 +145,11 @@ export default {
         searchObj.mechanics.push(this.mechanicsOptions[value]);
       });
 
+      if (searchObj.categories.length == 0 || searchObj.mechanics.length == 0) {
+        // alert("You must enter at least one choice for game category and game mechanic");
+        self.invalidSearch = !self.invalidSearch;
+        return;
+      }
 
       let gamesRef = db.collection("games");
       gamesRef.where("GeekAverage", ">", searchObj.minRating)
@@ -217,6 +225,7 @@ export default {
     
     return {
       searchButtonPushed: false,
+      invalidSearch: false,
       initialResults: [],
       categoriesValue: [],
       categoriesOptions: ['Abstract Strategy', 'Action/Dexterity', 'Adventure', 'Age of Reason', 'American Civil War', 'American Indian Wars', 
@@ -335,7 +344,8 @@ export default {
     grid-column: 1/3;
     display: flex;
     align-items: center;
-    font-size: 10px;
+    font-size: 12px;
+    font-style: italic;
   }
 
   #firstRowFields {
@@ -412,6 +422,14 @@ export default {
 
   .hideWarning {
     display: none;
+  }
+
+  .invalidSearchFields {
+    border: 1px solid red;
+  }
+
+  #invalidSearchText {
+    padding: 30px 20px;
   }
 
 
